@@ -1,0 +1,42 @@
+<?php
+namespace App\DAO;
+
+use App\Models\Ciudad;
+
+class CiudadDAO implements CiudadDAOInterface
+{
+    public function getAll()
+    {
+        return Ciudad::all();
+    }
+
+    public function getById($id)
+    {
+        return Ciudad::find($id);
+    }
+
+    public function create(array $data)
+    {
+        return Ciudad::create($data);
+    }
+
+    public function update($id, array $data)
+    {
+        $ciudad = Ciudad::find($id);
+        if ($ciudad) {
+            $ciudad->update($data);
+            return $ciudad;
+        }
+        return null;
+    }
+
+    public function delete($id)
+    {
+        $ciudad = Ciudad::find($id);
+        if ($ciudad) {
+            $ciudad->delete();
+            return true;
+        }
+        return false;
+    }
+}
