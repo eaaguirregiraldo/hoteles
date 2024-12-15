@@ -20,7 +20,11 @@ class CiudadController extends Controller
 
     public function show($id)
     {
-        return response()->json($this->ciudadDAO->getById($id));
+        $ciudad = $this->ciudadDAO->getById($id);
+        if ($ciudad) {
+            return response()->json($ciudad);
+        }
+        return response()->json(['message' => 'Ciudad no encontrada'], 404);
     }
 
     public function store(Request $request)
@@ -30,11 +34,19 @@ class CiudadController extends Controller
 
     public function update(Request $request, $id)
     {
-        return response()->json($this->ciudadDAO->update($id, $request->all()));
+        $ciudad = $this->ciudadDAO->update($id, $request->all());
+        if ($ciudad) {
+            return response()->json($ciudad);
+        }
+        return response()->json(['message' => 'Ciudad no encontrada'], 404);
     }
 
     public function destroy($id)
     {
-        return response()->json($this->ciudadDAO->delete($id));
+        $deleted = $this->ciudadDAO->delete($id);
+        if ($deleted) {
+            return response()->json(['message' => 'Ciudad eliminada']);
+        }
+        return response()->json(['message' => 'Ciudad no encontrada'], 404);
     }
 }
